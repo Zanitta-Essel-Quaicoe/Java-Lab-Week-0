@@ -8,40 +8,39 @@ public class StatisticsOfGrades {
         System.out.print("Enter the number of students in the class: ");
         int N = scanner.nextInt(); // The number of students in the class
 
-        int[] scores = new int[N]; // An array of size N to store the grades
+        double[] scores = new double[N]; // An array of size N to store the grades as doubles
 
         System.out.print("Enter the grades of students in the class: ");
         for (int i = 0; i < N; i++) {
-            scores[i] = scanner.nextInt();  // Read each grade
+            scores[i] = scanner.nextDouble();  // Read each grade as a double
         }
 
         // Finding the maximum, minimum, and average grade of the class
-        int maxGrade = scores[0];
-        int minGrade = scores[0];
-        int totalGrade = 0;
+        double maxGrade = scores[0];
+        double minGrade = scores[0];
+        double totalGrade = 0.0;
 
-        for (int i = 0; i < N; i++) { // Loop for finding the maximum grade
+        for (int i = 0; i < N; i++) { // Loop for finding the maximum and minimum grades
             if (scores[i] > maxGrade) {
                 maxGrade = scores[i];
             }
-            if (scores[i] < minGrade) { // Loop for finding the minimum grade
+            if (scores[i] < minGrade) {
                 minGrade = scores[i];
             }
-            totalGrade += scores[i]; // The sum of all the grades
+            totalGrade += scores[i]; // Sum all grades
         }
 
-        double averageGrade = (double) totalGrade / N; // Average of the sum = average grade of the class
+        double averageGrade = totalGrade / N; // Compute average grade of the class
 
-        System.out.println("The maximum grade of the class is " + maxGrade);
-        System.out.println("The minimum grade of the class is " + minGrade);
+        System.out.printf("The maximum grade of the class is %.2f%n", maxGrade); // Print max with 2 decimal places
+        System.out.printf("The minimum grade of the class is %.2f%n", minGrade); // Print min with 2 decimal places
         System.out.printf("The average grade of the class is %.2f%n", averageGrade);
 
         // Generating bar chart in the console
         int[] stats = new int[5];  // To hold grade ranges as specified
-        System.out.println(Arrays.toString(stats));
 
         // Loop for categorizing the grades
-        for (int score : scores) {
+        for (double score : scores) {
             if (score > 80) { // Grades above 80
                 stats[4] += 1;
             } else if (score >= 61) { // Grades from 61 to 80
