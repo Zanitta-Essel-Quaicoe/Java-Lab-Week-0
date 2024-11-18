@@ -7,12 +7,43 @@ public class StatisticsOfGrades {
 
         System.out.print("Enter the number of students in the class: ");
         int N = scanner.nextInt(); // The number of students in the class
+        scanner.nextLine(); // Consume the newline left-over from nextInt()
 
-        double[] scores = new double[N]; // An array of size N to store the grades as doubles
+        double[] scores = new double[N]; // An array of size N to store the grades as double
 
-        System.out.print("Enter the grades of students in the class: ");
+        System.out.print("Enter the grades of students in the class (separated by spaces): ");
+        String inputLine = scanner.nextLine(); // Read the entire line of grades
+        String[] gradeStrings = inputLine.trim().split("\\s+"); // Split grades by spaces
+
+        // Check if the number of grades entered matches N
+        if (gradeStrings.length < N) {
+            System.out.println("Error: Fewer grades entered than the number of students (" + N + "). Please restart and enter exactly " + N + " grades.");
+            scanner.close();
+            return;
+        } else if (gradeStrings.length > N) {
+            System.out.println("Error: More grades entered than the number of students (" + N + "). Please restart and enter exactly " + N + " grades.");
+            scanner.close();
+            return;
+        }
+
+        // Parse and validate the grades into the scores array
         for (int i = 0; i < N; i++) {
-            scores[i] = scanner.nextDouble();  // Read each grade as a double
+            try {
+                double grade = Double.parseDouble(gradeStrings[i]);
+
+                // Check if the grade is within the valid range 0-100 inclusive
+                if (grade < 0 || grade > 100) {
+                    System.out.println("Error: Grade " + grade + " is out of the valid range (0-100). Please restart and enter grades within the range.");
+                    scanner.close();
+                    return;
+                }
+                
+                scores[i] = grade;
+            } catch (NumberFormatException e) {
+                System.out.println("Error: '" + gradeStrings[i] + "' is not a valid number. Please restart and enter numeric grades only.");
+                scanner.close();
+                return;
+            }
         }
 
         // Finding the maximum, minimum, and average grade of the class
